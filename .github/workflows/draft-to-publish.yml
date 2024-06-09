@@ -1,29 +1,36 @@
+name: Create Blog Post
+
 on:
   push:
-    paths:
-      - 'src/content/draft/*.md'
+    branches:
+      - main
 
 jobs:
+
   create-blog-post:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Create blog post
+      with:
+        fetch-depth: 0
+
+    - name: Set up Node.js 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Create new blog post
       run: |
-        # Get the name of the uploaded file
-        BLOG_FILENAME=$(echo ${{ github.event.head_commit.modified }} | grep -o 'draft/[^/]*\.md$')
-        BLOG_TITLE=$(echo $BLOG_FILENAME | sed 's/\.md$//')
-        BLOG_DATE=$(date '+%Y-%m-%d')
+        node create-blog-post.js
         
-        # Create the blog post folder
-        mkdir -p "content/blog/$BLOG_TITLE"
-        
-        # Copy the content from the draft file to index.md
-        cat "src/content/draft/$BLOG_FILENAME" > "src/content/blog/$BLOG_TITLE/index.md"
-        
-        # Add the new blog post to git
-        git add "content/blog/$BLOG_TITLE"
-        git commit -m "Create new blog post: $BLOG_TITLE"
-        git push
+    - name: Commit new blog post
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: 'src/content/blog/'
+        message: 'Create new blog post'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
