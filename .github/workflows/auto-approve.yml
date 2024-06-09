@@ -1,8 +1,45 @@
-name: aa
-'on': push
+name: Automated Pull Request and Merge
+
+on:
+  push:
+    branches:
+      - your-branch-name
+
 jobs:
-  my-job:
-   runs-on: ubuntu-latest
-   steps:
-     - name: my-step
-       run: echo "Hello World!"
+  automate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        title: Automatically created pull request
+        body: Automated pull request created from changes in your branch.
+        labels: automated
+
+    - name: Approve and Merge Pull Request
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { context, github } = require('@actions/github');
+          const { owner, repo } = context.repo;
+          const prNumber = context.payload.pull_request.number;
+          
+          github.pulls.createReview({
+            owner,
+            repo,
+            pull_number: prNumber,
+            event: 'APPROVE'
+          });
+
+          github.pulls.merge({
+            owner,
+            repo,
+            pull_number: prNumber
+          });
