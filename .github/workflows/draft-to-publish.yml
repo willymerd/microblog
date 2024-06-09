@@ -1,43 +1,48 @@
-name: Create Blog Post
+name: Move Markdown Files to Blog
 
 on:
   push:
     paths:
-      - '**.md'
+      - 'src/content/draft/*.md'
 
 jobs:
-
-  create-blog-post:
+  move-markdown:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Set up Node.js 20
       uses: actions/setup-node@v3
       with:
-        node-version: 20
+        node-version: '20'
 
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Create new blog post
+    - name: Move Markdown files
       run: |
-        # Get the name of the uploaded file
-        file_name=$(echo "$GITHUB_EVENT_PATH" | rev | cut -d'/' -f1 | rev | sed 's/.md//')
-        
-        # Create the new folder
-        mkdir -p src/content/blog/$file_name
-        
-        # Move the file to the new folder and rename it to index.md
-        mv "$GITHUB_WORKSPACE/$GITHUB_EVENT_PATH" src/content/blog/$file_name/index.md
-        
-    - name: Commit new blog post
-      uses: EndBug/add-and-commit@v9
+        # Get the list of added/modified files
+        FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD src/content/draft/*.md)
+
+        for FILE in $FILES; do
+          # Extract the filename without extension
+          FILENAME=$(basename "$FILE" .md)
+
+          # Create the new directory under src/content/blog/
+          NEW_DIR="src/content/blog/$FILENAME"
+          mkdir -p "$NEW_DIR"
+
+          # Move the file and rename it to index.md
+          git mv "$FILE" "$NEW_DIR/index.md"
+        done
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add src/content/blog/
+        git commit -m 'Move markdown files to blog and rename to index.md'
+
+    - name: Push changes
+      uses: ad-m/github-push-action@v0.6.0
       with:
-        add: 'src/content/blog/'
-        message: 'Create new blog post'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
