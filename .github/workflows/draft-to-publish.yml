@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        node-version: '20' # Tambahkan ini untuk menggunakan Node.js 20
 
     - name: Set up Node.js 20
       uses: actions/setup-node@v3
