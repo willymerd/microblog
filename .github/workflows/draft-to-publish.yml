@@ -26,7 +26,7 @@ jobs:
     - name: Create new blog post
       run: |
         # Get the name of the uploaded file
-        file_name=$(echo "$GITHUB_EVENT_NAME" | sed 's/.md//')
+        file_name=$(echo "$GITHUB_EVENT_PATH" | rev | cut -d'/' -f1 | rev | sed 's/.md//')
         
         # Create the new folder
         mkdir -p src/content/blog/$file_name
