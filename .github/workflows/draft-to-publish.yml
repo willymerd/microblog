@@ -25,7 +25,14 @@ jobs:
 
     - name: Create new blog post
       run: |
-        node create-blog-post.js
+        # Get the name of the uploaded file
+        file_name=$(echo $GITHUB_EVENT_PATH | rev | cut -d'/' -f1 | rev | sed 's/.md//')
+        
+        # Create the new folder
+        mkdir -p src/content/blog/$file_name
+        
+        # Move the file to the new folder and rename it to index.md
+        mv $GITHUB_EVENT_PATH src/content/blog/$file_name/index.md
         
     - name: Commit new blog post
       uses: EndBug/add-and-commit@v9
