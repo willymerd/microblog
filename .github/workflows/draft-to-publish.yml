@@ -23,6 +23,11 @@ jobs:
         # Get the list of added/modified files from the latest commit
         FILES=$(git diff-tree --no-commit-id --name-only -r HEAD src/content/draft/*.md)
 
+        if [ -z "$FILES" ]; then
+          echo "No new markdown files to process."
+          exit 0
+        fi
+
         for FILE in $FILES; do
           # Extract the filename without extension
           FILENAME=$(basename "$FILE" .md)
@@ -39,8 +44,12 @@ jobs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add src/content/blog/
-        git commit -m 'Move markdown files to blog and rename to index.md'
+        if [ -n "$(git status --porcelain)" ]; then
+          git add src/content/blog/
+          git commit -m 'Move markdown files to blog and rename to index.md'
+        else
+          echo "No changes to commit."
+        fi
 
     - name: Push changes
       uses: ad-m/github-push-action@v0.6.0
