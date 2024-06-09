@@ -49,10 +49,10 @@ jobs:
           git commit -m 'Move markdown files to blog and rename to index.md'
         else
           echo "No changes to commit."
-        
+          exit 0
+
     - name: Push changes
-      uses: github-actions-x/commit@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
-        commit_message: 'Move markdown files to blog and rename to index.md'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push origin HEAD:${{ github.ref }}
