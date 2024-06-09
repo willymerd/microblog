@@ -11,17 +11,17 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4 # Gunakan versi terbaru yang mendukung Node.js 20
+      uses: actions/checkout@v4
 
     - name: Set up Node.js 20
-      uses: actions/setup-node@v4 # Gunakan versi terbaru yang mendukung Node.js 20
+      uses: actions/setup-node@v4
       with:
         node-version: '20'
 
     - name: Move Markdown files
       run: |
-        # Get the list of added/modified files
-        FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD src/content/draft/*.md)
+        # Get the list of added/modified files from the latest commit
+        FILES=$(git diff-tree --no-commit-id --name-only -r HEAD src/content/draft/*.md)
 
         for FILE in $FILES; do
           # Extract the filename without extension
