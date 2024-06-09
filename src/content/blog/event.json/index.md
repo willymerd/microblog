@@ -1,7 +1,7 @@
 {
-  "after": "3d449c3e23d6574036f32561258a62bb47e44c35",
+  "after": "0995f91e4cdf290d3292cee7b65e5ac721bb19cc",
   "base_ref": null,
-  "before": "e3ab8efb3df3319b487a27f376ba41ad0dac804f",
+  "before": "98b74c868b2d17f29979f965afdd58e51e5deb9e",
   "commits": [
     {
       "author": {
@@ -15,14 +15,14 @@
         "username": "web-flow"
       },
       "distinct": true,
-      "id": "3d449c3e23d6574036f32561258a62bb47e44c35",
-      "message": "Update draft-to-publish.yml\n\nscript update 2.0",
-      "timestamp": "2024-06-10T05:50:33+07:00",
-      "tree_id": "b6b873f5f8addae08e65fc97dc69e3fb4217a8cf",
-      "url": "https://github.com/willymerd/microblog/commit/3d449c3e23d6574036f32561258a62bb47e44c35"
+      "id": "0995f91e4cdf290d3292cee7b65e5ac721bb19cc",
+      "message": "Delete src/content/belajar-api-bettermode.md\n\nsalah kamar",
+      "timestamp": "2024-06-10T05:51:07+07:00",
+      "tree_id": "5986debb721acb11fb7f796a7b41bbd9ac6e4af7",
+      "url": "https://github.com/willymerd/microblog/commit/0995f91e4cdf290d3292cee7b65e5ac721bb19cc"
     }
   ],
-  "compare": "https://github.com/willymerd/microblog/compare/e3ab8efb3df3...3d449c3e23d6",
+  "compare": "https://github.com/willymerd/microblog/compare/98b74c868b2d...0995f91e4cdf",
   "created": false,
   "deleted": false,
   "forced": false,
@@ -38,11 +38,11 @@
       "username": "web-flow"
     },
     "distinct": true,
-    "id": "3d449c3e23d6574036f32561258a62bb47e44c35",
-    "message": "Update draft-to-publish.yml\n\nscript update 2.0",
-    "timestamp": "2024-06-10T05:50:33+07:00",
-    "tree_id": "b6b873f5f8addae08e65fc97dc69e3fb4217a8cf",
-    "url": "https://github.com/willymerd/microblog/commit/3d449c3e23d6574036f32561258a62bb47e44c35"
+    "id": "0995f91e4cdf290d3292cee7b65e5ac721bb19cc",
+    "message": "Delete src/content/belajar-api-bettermode.md\n\nsalah kamar",
+    "timestamp": "2024-06-10T05:51:07+07:00",
+    "tree_id": "5986debb721acb11fb7f796a7b41bbd9ac6e4af7",
+    "url": "https://github.com/willymerd/microblog/commit/0995f91e4cdf290d3292cee7b65e5ac721bb19cc"
   },
   "pusher": {
     "email": "74842628+willymerd@users.noreply.github.com",
@@ -137,7 +137,7 @@
     },
     "private": false,
     "pulls_url": "https://api.github.com/repos/willymerd/microblog/pulls{/number}",
-    "pushed_at": 1717973433,
+    "pushed_at": 1717973467,
     "releases_url": "https://api.github.com/repos/willymerd/microblog/releases{/id}",
     "size": 1844,
     "ssh_url": "git@github.com:willymerd/microblog.git",
@@ -152,7 +152,7 @@
     "teams_url": "https://api.github.com/repos/willymerd/microblog/teams",
     "topics": [],
     "trees_url": "https://api.github.com/repos/willymerd/microblog/git/trees{/sha}",
-    "updated_at": "2024-06-09T22:41:37Z",
+    "updated_at": "2024-06-09T22:50:56Z",
     "url": "https://github.com/willymerd/microblog",
     "visibility": "public",
     "watchers": 0,
